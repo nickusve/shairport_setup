@@ -8,7 +8,7 @@ fi
 echo "This will install shairport-sync, any required libraries, and configure the system to run it"
 echo "This process will reboot the system as well. Press ctrl-c to cancel"
 
-sleep 10
+# sleep 10
 
 # General update and required package installation
 NEEDRESTART_MODE=a apt update -y
@@ -60,8 +60,8 @@ ExecStart=pulseaudio --daemonize=no --system --realtime --log-target=journal
 WantedBy=multi-user.target" > /etc/systemd/system/pulseaudio.service
 
 # Updating Pulse Audio startup settings
-# sed -i 's|.*default-server .*|  default-server = /var/run/pulse/native|' /etc/pulse/client.conf
-# sed -i 's|.*autospawn .*|  autospawn = no|' /etc/pulse/client.conf
+sed -i 's|.*default-server .*|  default-server = /var/run/pulse/native|' /etc/pulse/client.conf
+sed -i 's|.*autospawn .*|  autospawn = no|' /etc/pulse/client.conf
 
 # Change default sample rate to standard 48000 suported by most USB DACs
 sed -i 's/.*default-sample-r.*/  default-sample-rate = 48000/' /etc/pulse/daemon.conf
@@ -78,6 +78,9 @@ usermod -aG pulse-access root
 usermod -aG audio shairport-sync
 usermod -aG pulse-access shairport-sync
 
+# Create secure directory 
+mkdir -p /home/shairport-sync
+chown -R shairport-sync:shairport-sync /home/shairport-sync/
 
 # Enable daemon and reboot to apply all changes
 systemctl enable pulseaudio.service
