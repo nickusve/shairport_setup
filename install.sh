@@ -8,7 +8,7 @@ fi
 echo "This will install shairport-sync, any required libraries, and configure the system to run it"
 echo "This process will reboot the system as well. Press ctrl-c to cancel"
 
-# sleep 10
+sleep 10
 
 # General update and required package installation
 NEEDRESTART_MODE=a apt update -y
