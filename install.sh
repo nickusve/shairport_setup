@@ -8,7 +8,7 @@ fi
 echo "This will install shairport-sync, any required libraries, and configure the system to run it"
 echo "This process will reboot the system as well. Press ctrl-c to cancel"
 
-# sleep 10
+sleep 5
 
 # General update and required package installation
 NEEDRESTART_MODE=a apt update -y
@@ -82,7 +82,7 @@ echo 'pcm.!default {
 
 ctl.!default {
     type hw
-    card Generic
+    card 1
 }
 
 pcm.shairplay {
@@ -139,7 +139,7 @@ perl -i -0pe 's|(general =[^\}]*)//(\s+playback_mode = )"[^;]*;|\1\2"mono";|gms'
 perl -i -0pe 's|(general =[^\}]*)//(\s+volume_control_profile = )"[^;]*;|\1\2"dasl_tapered";|gms' /etc/shairport-sync.conf
 perl -i -0pe 's|(sessioncontrol =[^\}]*)//(\s+run_this_before_entering_active_state = )"[^;]*;|\1\2"/usr/local/bin/enable-keepawake";|gms' /etc/shairport-sync.conf
 perl -i -0pe 's|(sessioncontrol =[^\}]*)//(\s+run_this_after_exiting_active_state = )"[^;]*;|\1\2"/usr/local/bin/disable-keepawake";|gms' /etc/shairport-sync.conf
-perl -i -0pe 's|(alsa =[^\}]*)//(\s+output_device = )"[^;]*;|\1\2"shairplay";|gms' /etc/shairport-sync.conf
+perl -i -0pe 's|(alsa =[^\}]*)//(\s+mixer_control_name = )"[^;]*;|\1\2"PCM";|gms' /etc/shairport-sync.conf
 perl -i -0pe 's|(alsa =[^\}]*)//(\s+output_format = )"[^;]*;|\1\2"S24_3LE";|gms' /etc/shairport-sync.conf
 
 read -p "Enter restart minute for daily restart: " RESTART_MIN
