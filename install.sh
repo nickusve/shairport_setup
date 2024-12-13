@@ -148,7 +148,7 @@ if [ "$RESTART_MIN" -lt 0 ] || [ "$RESTART_MIN" -gt 60 ]; then
   RESTART_MIN=0
 fi
 
-(echo "$RESTART_MIN 3 * * * systemctl restart shairport-sync >/dev/null 2>&1") | crontab -
+(echo "$RESTART_MIN 3 * * * reboot") | crontab -
 
 # Enable daemon and reboot to apply all changes
 systemctl enable shairport-sync
