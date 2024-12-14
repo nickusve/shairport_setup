@@ -150,6 +150,8 @@ fi
 
 (echo "$RESTART_MIN 3 * * * reboot") | crontab -
 
+ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
+
 # Enable daemon and reboot to apply all changes
 systemctl enable shairport-sync
 reboot -h now
